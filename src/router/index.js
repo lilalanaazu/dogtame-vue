@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Registro from "../views/Registro.vue"
+import Login from "../views/Login.vue"
+import Favoritos from "../views/Favoritos.vue"
+import Contacto from "../views/Contacto.vue"
+import Busqueda from "../views/Busqueda.vue"
+import Perfil from "../views/Perfil.vue"
+import Adopcion from "../views/Adopcion.vue"
 
 Vue.use(VueRouter)
 
@@ -17,6 +24,41 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/registro',
+    name: 'Registro',
+    component: Registro
+  },
+  {
+    path: '/login', 
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/favoritos',
+    name: 'Favoritos',
+    component: Favoritos
+  },
+  {
+    path: '/contacto',
+    name: "Contacto", 
+    component: Contacto
+  },
+  {
+    path: "/Busqueda",
+    name: "Busqueda",
+    component: Busqueda
+  }, 
+  {
+    path:"/Perfil", 
+    name: "Perfil",
+    component: Perfil
+  },
+  {
+    path: "/Adopcion",
+    name:"Adopcion", 
+    component: Adopcion
   }
 ]
 
