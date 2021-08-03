@@ -18,7 +18,7 @@
           >Contraseña</el-input
         ></el-form-item
       >
-      <el-button variant="outline-secondary" @click="logIn"> Ingresar</el-button>
+      <el-button variant="outline-secondary" @click="logIn()"> Ingresar</el-button>
     </el-form>
   </div>
 </template>
@@ -31,6 +31,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      hasCorrectCredentials: null,
       user: {
         email: "",
         password: ""
@@ -38,11 +39,15 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setLoggedIn"]),
     logIn() {
       Firebase.auth()
         .signInWithEmailAndPassword(this.user.email, this.user.password)
         .then(
           accept => {
+            this.hasCorrectCredentials = true;
+            this.setLoggedIn(this.hasCorrectCredentials);
+            console.log(this.hasCorrectCredentials);
             this.$router.push("/");
           },
           reject => {
@@ -55,6 +60,6 @@ export default {
         );
     }
   },
-  ...mapActions(["setUser"])
+  
 };
 </script>

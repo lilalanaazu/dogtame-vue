@@ -37,7 +37,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button variant="outline-secondary" @click="addUser(user), (user = {})"
+          <el-button variant="outline-secondary" @click="register(user), (user = {})"
             >Registrarme</el-button
           >
           <el-button>Cancelar </el-button>
@@ -59,10 +59,6 @@ export default {
         name: "",
         email: "",
         address: "",
-        typeDog: "",
-        typeCat: "",
-        typeBird: "",
-        typeRodent: "",
         resource: "",
         desc: ""
       }
@@ -74,7 +70,7 @@ export default {
       })
     })
   },
-  methods: {...mapActions(["addUser"])},
+  methods: {...mapActions(["register"])},
 
 
   computed: {

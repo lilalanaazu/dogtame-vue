@@ -17,7 +17,7 @@
          <b-nav-item ><router-link to="/">Inicio </router-link></b-nav-item>
         <b-nav-item ><router-link to="/Registro"> Registro </router-link> </b-nav-item>
         <b-nav-item ><router-link to="/Login"> Login </router-link></b-nav-item>
-         <b-nav-item ><router-link to="/Favoritos">Favoritos</router-link></b-nav-item>
+         <b-nav-item v-if="isLogged" ><router-link to="/Favoritos">Favoritos</router-link></b-nav-item>
           <b-nav-item ><router-link to="/Busqueda">Búsqueda</router-link></b-nav-item>
          <b-nav-item ><router-link to="/Contacto">Contacto</router-link></b-nav-item>
       </b-navbar-nav>
@@ -31,6 +31,7 @@
 
 <script>
 
+import { mapState, mapActions} from "vuex";
 import Firebase from "firebase";
 
       export default {
@@ -40,18 +41,20 @@ import Firebase from "firebase";
             activeIndex2: "1"
           };
         },
+        computed: { ...mapState(["isLogged"])},
         methods: {
           async signOut(){
 
             try {
               await Firebase.auth().signOut();
-              alert ("Desblogeado con éxito");
+              alert ("Deslogeado con éxito");
             } catch (e) {}
           },
           handleSelect(key, keyPath) {
             console.log(key, keyPath);
           }
-        }
+        },
+        
       };
     </script>
 

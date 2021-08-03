@@ -18,11 +18,11 @@
     ></b-carousel-slide>
     <b-carousel-slide
       caption="Dogtame"
-      img-src="https://www.petalatino.com/wp-content/uploads/SXC-bunnynose-1282544.jpg"
+      img-src="https://soyfotografodeperros.com/wp-content/uploads/2019/10/Cachorros-1.jpg"
     ></b-carousel-slide>
     <b-carousel-slide
       caption="Dogtame"
-      img-src="https://www.petalatino.com/wp-content/uploads/SXC-bunnynose-1282544.jpg"
+      img-src="https://www.homecenter.com.co/static/landing/guiasdecompra/Guias_de_compra_2/img/cosas-que-debes-saber-antes-de-adoptar-un-conejo/conejillo.jpg"
     ></b-carousel-slide>
   </b-carousel>
 
