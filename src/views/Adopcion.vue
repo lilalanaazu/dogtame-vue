@@ -23,6 +23,8 @@
 <br> 
 <b-input v-model="adoption.typeofanimal" placeholder="Tipo de animal"/>
 <br> 
+<b-input v-model="adoption.sex" placeholder="Sexo"/>
+<br>
  <b-input v-model="adoption.size" placeholder="Tamaño"/>
 <br> 
 <b-input v-model="adoption.surgery"  placeholder="Cirugías"/>
@@ -31,6 +33,7 @@
 <br> 
  <b-input v-model="adoption.city" placeholder="Ciudad"/>
 <br> 
+
 <b-button variant="outline-secondary" @click="addAdoption(adoption)"> Enviar </b-button>
 
 </div>
@@ -60,6 +63,7 @@ export default {
         surgery: "",
         typeofanimal:"",
         userid: "",
+        sex:"",
         vaccine:"",
         email:"",
         photoURL: {
