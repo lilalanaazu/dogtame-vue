@@ -8,6 +8,8 @@ import Contacto from "../views/Contacto.vue"
 import Busqueda from "../views/Busqueda.vue"
 import Perfil from "../views/Perfil.vue"
 import Adopcion from "../views/Adopcion.vue"
+import Misadoptados from "../views/Misadoptados.vue"
+import Doyenadopcion from "../views/Doyenadopcion.vue"
 
 Vue.use(VueRouter)
 
@@ -59,6 +61,16 @@ const routes = [
     path: "/Adopcion",
     name:"Adopcion", 
     component: Adopcion
+  },
+  {
+    path:"/Misadoptados",
+    name: "Misadoptados",
+    component: Misadoptados
+  },
+  {
+    path:"/Doyenadopcion",
+    name: "Doyenadopcion",
+    component: Doyenadopcion
   }
 ]
 

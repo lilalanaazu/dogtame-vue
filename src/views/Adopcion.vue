@@ -3,35 +3,35 @@
 <div>
   <h1> Formulario para dar en Adopción </h1>
 <h4> Favor de subir una imágen de el adoptante </h4>
-  <input placeholder="e-mail" v-model="user.email"/>
-   <input type="file" @change="setFile"/>
-   <br/><br>
-   <button @click="uploadFile">Subir foto </button>
   
-   <div v-for="({ url, name}, i ) in user.files" :key="i">
-     <h6> {{name}}</h6>
-     <img width="200 " :src ="url"/>
+   <input type="file" @change="setImg"/>
+   <br/><br>
+   <button @click="saveAdoption">Subir foto </button>
+  
+   <div>
+     <h6> </h6>
+     <img width="200 " :src ="imgInput"/>
      <br>
    </div>
 
 <h2 class="pt-5"> Formulario Adopción</h2>
 <div class="container border mt-5">
   
- <b-input v-model="adoptMe.petsname" placeholder="Nombre Mascota"/> 
+ <b-input v-model="adoption.petsname" placeholder="Nombre Mascota"/> 
 <br>
-<b-input v-model="adoptMe.age" placeholder="Años"/>
+<b-input v-model="adoption.age" placeholder="Años"/>
 <br> 
-<b-input v-model="adoptMe.typeofanimal" placeholder="Tipo de animal"/>
+<b-input v-model="adoption.typeofanimal" placeholder="Tipo de animal"/>
 <br> 
- <b-input v-model="adoptMe.size" placeholder="Tamaño"/>
+ <b-input v-model="adoption.size" placeholder="Tamaño"/>
 <br> 
-<b-input v-model="adoptMe.surgery"  placeholder="Cirugías"/>
+<b-input v-model="adoption.surgery"  placeholder="Cirugías"/>
 <br> 
-<b-input v-model="adoptMe.vaccine"  placeholder="Vacunas al día"/>
+<b-input v-model="adoption.vaccine"  placeholder="Vacunas al día"/>
 <br> 
- <b-input v-model="adoptMe.city" placeholder="Ciudad"/>
+ <b-input v-model="adoption.city" placeholder="Ciudad"/>
 <br> 
-<b-button variant="outline-secondary" @click="addAdoption(adoptMe)"> Enviar </b-button>
+<b-button variant="outline-secondary" @click="addAdoption(adoption)"> Enviar </b-button>
 
 </div>
 
@@ -52,7 +52,7 @@ export default {
         files: [],
       }, 
       file: null, 
-      adoptMe:{
+      adoption:{
         age: "",
         city: "",
         petsname: "",
@@ -61,30 +61,68 @@ export default {
         typeofanimal:"",
         userid: "",
         vaccine:"",
+        email:"",
+        photoURL: {
+          nameFile: "",
+          url: ""
+        }
       }
     };
   
   },
+  mounted(){
+    this.user.email = firebase.auth().currentUser.email;
+  },
   methods: {
     ...mapActions(["addAdoption"]),
+    setImg(e) {
+      const file = e.target.files[0];
+      this.file = file;
+      console.log(file.name);
+      const reader= new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload= ()=> {
+        this.imgInput = reader.result;
+      };
+    },
+    async saveAdoption() {
+      try {
+        await this.uploadFile();
+        const { adoption} = this;
+        alert("Imagen subida con éxito");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async registerAdoption(){
+      console.log("Adding adoption...");
+      this.addAdoption({adoption: data});
+    },
     async uploadFile(){
       const {
-        file,
-        file: { name },
+        adoption,
+        file: { name: nameFile },
+        file
       } = this;
       const storageRef = firebase.storage().ref();
-      const fileRef = storageRef.child(name);
-      await fileRef.put(file);
-      const url = await fileRef.getDownloadURL();
-      this.user.files.push({name, url });
-      console.log("archivo subiro con éxito", url );
-      this.recordUpload();
-    },
-    async recordUpload(){
-      const { user} = this;
-      const {email } = user;
-      await firebase.firestore().collection("users").doc(email).set(user);
+      const fileDirection = storageRef.child(`${nameFile}`);
+      await fileDirection.put(file);
+      const url = await fileDirection.getDownloadURL();
+      this.imgInput = url;
+      adoption.photoURL = {
+        url, 
+        nameFile
+      };
       console.log("guardado con éxito");
+    },
+    async deleteImg(nameFile) {
+      try {
+        const storageRef= firebase.storage().ref();
+        const fileDirection = storageRef.child (`${nameFile}`);
+        await fileDirection.delete();
+      } catch (e){
+        console.log(e);
+      }
     },
     setFile(e){
       const elemento = e.target;

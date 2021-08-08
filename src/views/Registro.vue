@@ -60,7 +60,11 @@ export default {
         email: "",
         address: "",
         resource: "",
-        desc: ""
+        desc: "",
+        photoURL: {
+          nameFile: "",
+          url: ""
+        }
       }
     };
   },  mounted(){

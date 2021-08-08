@@ -1,7 +1,7 @@
 <template>
   <div>
-<template>
-  <b-navbar toggleable type="dark" variant="secondary">
+  <template>
+    <b-navbar toggleable type="dark" variant="secondary">
     <img class="logo" src="../assets/logo.png">
     <b-navbar-brand type="light">Dogtame</b-navbar-brand>
 
@@ -18,15 +18,18 @@
         <b-nav-item ><router-link to="/Registro"> Registro </router-link> </b-nav-item>
         <b-nav-item ><router-link to="/Login"> Login </router-link></b-nav-item>
          <b-nav-item v-if="isLogged" ><router-link to="/Favoritos">Favoritos</router-link></b-nav-item>
-          <b-nav-item ><router-link to="/Busqueda">Búsqueda</router-link></b-nav-item>
+          <b-nav-item v-if="isLogged" ><router-link to="/Busqueda">Búsqueda</router-link></b-nav-item>
+           <b-nav-item v-if="isLogged" ><router-link to="/Perfil">Perfil</router-link></b-nav-item>
+           <b-nav-item v-if="isLogged" ><router-link to="/Adopcion">Adopción</router-link></b-nav-item>
          <b-nav-item ><router-link to="/Contacto">Contacto</router-link></b-nav-item>
       </b-navbar-nav>
     </b-collapse>
-  </b-navbar>
-</template>
-    
+    </b-navbar> 
+  </template> 
   </div>
 </template>   
+
+  
 
 
 <script>

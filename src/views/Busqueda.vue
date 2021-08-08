@@ -12,7 +12,7 @@
       </b-card-text>
       <template #footer>
      
-        <b-button variant="outline-secondary">Agregar a Favoritos</b-button>
+        <b-button variant="outline-danger">Like</b-button>
       </template>
     </b-card>
 
@@ -22,7 +22,7 @@
       </b-card-text>
       <template #footer>
       
-         <b-button variant="outline-secondary">Agregar a Favoritos</b-button>
+         <b-button variant="outline-danger">Like</b-button>
       </template>
     </b-card>
 
@@ -33,7 +33,7 @@
       </b-card-text>
       <template #footer>
     
-         <b-button variant="outline-secondary"> Agregar a Favoritos</b-button>
+         <b-button variant="outline-danger"> Like</b-button>
       </template>
     </b-card>
 
@@ -46,7 +46,7 @@
       </b-card-text>
       <template #footer>
         
-         <b-button variant="outline-secondary">Agregar a Favoritos</b-button>
+         <b-button variant="outline-danger">Like</b-button>
       </template>
     </b-card>
 
@@ -56,7 +56,7 @@
       </b-card-text>
       <template #footer>
       
-         <b-button variant="outline-secondary">Agregar a Favoritos</b-button>
+         <b-button variant="outline-danger">Like</b-button>
       </template>
     </b-card>
 
@@ -67,7 +67,7 @@
       </b-card-text>
       <template #footer>
      
-         <b-button variant="outline-secondary">Agregar a Favoritos</b-button>
+         <b-button variant="outline-danger">Like</b-button>
       </template>
     </b-card>
   </b-card-group>

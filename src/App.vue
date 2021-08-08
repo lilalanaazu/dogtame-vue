@@ -11,11 +11,17 @@
 
 <script>
 import Navbar from "@/components/Navbar"
-
+import { mapActions } from "vuex";
 
 export default {
   name: "app",
-  components: {Navbar}
+  components: {Navbar},
+    created() {
+    this.getUsers();
+  },
+  methods: {
+    ...mapActions(["getUsers"]),
+  },
 }
 </script>
 
