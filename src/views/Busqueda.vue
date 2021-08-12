@@ -3,6 +3,7 @@
 <div>
    <h1> Encuentra a tu próximo miembro de la familia </h1>
 
+
   <div>
     <h5> Elige el tipo de animal que buscas </h5> 
     <b-form-select v-model="selected" :options="options"></b-form-select> 
@@ -31,8 +32,9 @@
           <h5>Sexo: {{adoption.sex}}</h5>
           <h5>Cirugías: {{adoption.surgery}}</h5>
           <h5>Años: {{adoption.age}}</h5>
+          <h5>Likes: {{adoption.likes}}</h5>
     </b-card-text>
-    <b-button href="#" variant="outline-danger" @click="addFavorite(adoption)">Like</b-button>
+    <b-button :key="adoption.likes" href="#" variant="outline-danger"  v-if="isLiked(adoption)" @click="like(adoption)">Like</b-button>
   </b-card>
   </b-card-group>
 
@@ -45,6 +47,8 @@
 <script>
 
 import {mapActions, mapState} from "vuex";
+import firebase from "firebase"
+import Vue from 'vue';
 
 export default {
     name: "Busqueda",
@@ -52,25 +56,52 @@ export default {
         return {
           selected: null,
           options: ["Perro", "Gato", "Conejo", "Ave", "Todos"],
-          adoptionsFiltered: []
+          adoptionsFiltered: [],
+          allFavorites: [],
         }
     },
     mounted(){
       this.fetch_adoptions();
       this.get_Favorites();
+      this.adoptionsFiltered = this.allAdoptions;
+      this.allFavorites = this.favorites;
+      console.log(this.adoptionsFiltered.length);
+      console.log(this.allFavorites.length);
     },
     methods: {
-      ...mapActions(["fetch_adoptions", "get_Favorites", "addFavorite"]),
+      ...mapActions(["fetch_adoptions", "get_Favorites", "addFavorite", "update_Adoption"]),
       filterBy(selected){
         const typeofanimal = selected.toLowerCase();
-        console.log("filtrando por..." + selected);
-        if(typeofanimal == "todos") {
-          this.adoptionsFiltered = this.allAdoptions;
-        } else {
-          this.adoptionsFiltered = this.allAdoptions.filter(a => a.typeofanimal == typeofanimal);
+        this.adoptionsFiltered = this.allAdoptions;
+        if(typeofanimal != "todos") {
+          this.adoptionsFiltered = this.adoptionsFiltered.filter(a => a.typeofanimal == typeofanimal);
         }
         
 
+      },
+      like(adoption){
+        const fav = this.allFavorites.find(i => i.adoptionsId == adoption.id);
+        if (fav == null) {
+          console.log("giving like...");
+          adoption.likes ++;
+          const { id } = adoption;
+          this.addFavorite(adoption);
+          this.update_Adoption({adoption: adoption, id});
+          this.$forceUpdate();
+
+        } else {
+          console.log("already liked");
+        }
+
+
+      },
+      isLiked(adoption){
+        const fav = this.allFavorites.find(i => i.adoptionsId == adoption.id);
+        if (fav == null) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
     computed: {...mapState(["allAdoptions", "favorites"])}

@@ -16,11 +16,11 @@
 
      
 
-    <h4>Nombre:</h4>
+    <b-icon-person></b-icon-person><h4>Nombre:</h4>
     <h5>{{ userFoundByEmail.name }}</h5>
-    <h4>Correo:</h4>
+    <font-awesome-icon icon="at" /><h4>Correo:</h4>
     <h5>{{ userFoundByEmail.email }}</h5>
-    <h4>Ubicación:</h4>
+    <font-awesome-icon icon="fas fa-map-marker-alt"/><h4>Ubicación:</h4>
     <h5>{{ userFoundByEmail.address }}</h5>
     <div class="mt-5">
       <b-button class="mb-5" variant="outline-danger"> Guardar </b-button>

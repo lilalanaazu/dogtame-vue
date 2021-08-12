@@ -23,7 +23,7 @@
           <h5>Cirugías: {{favorite.surgery}}</h5>
           <h5>Años: {{favorite.age}}</h5>
     </b-card-text>
-    <b-button href="#" variant="outline-danger">Like</b-button>
+    <b-button href="#" variant="outline-danger">Adoptar</b-button>
   </b-card>
   </b-card-group>
 

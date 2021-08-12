@@ -15,6 +15,7 @@ export default new Vuex.Store({
     isLogged: false,
   },
   mutations: {
+    //USER MUTATIONS 
     SET_ITEM_DATA_IN_FORM(state, id) {
       state.editing = true;
       state.idEditing = id
@@ -29,16 +30,18 @@ export default new Vuex.Store({
       state.id = id 
     },
     GET_USERS_BY_EMAIL (state, email){
-      console.log("in mutation GET_USERS_BY_EMAIL");
       state.userFoundByEmail = state.users.find(u => u.email == email);
       console.log("found: " + state.userFoundByEmail.email);
     },
+    //FAVORITES 
     GET_FAVORITES (state, favorites){
       state.favorites = favorites;
+      //console.log("favs size: " + state.favorites.length);
     },
     ADD_FAVORITE(state, favorite){
       
     },
+    //ADOPTION
     GET_ADOPTIONS (state, adoptions) {
       state.adoptions = adoptions
     },
@@ -47,82 +50,47 @@ export default new Vuex.Store({
     },
     GET_ADOPTIONS_BY_EMAIL( state, email) {
       state.adoptions = state.adoptions.find(a => a.email == email);
-    },
-    ADD_COMMENT ( state, contacto) {
-      state.contacto = contacto
-    },
-    ADD_ADOPTION (state, adoption){
+    },ADD_ADOPTION (state, adoption){
       state.adoption = adoption 
+   
+    },  SET_ADOPTIONS(state, adoptions) {
+      state.adoptions = adoptions;
+    //LOG IN 
     },
     SET_LOGGED_IN(state) {
       state.isLogged = true;
     },
-    SET_ADOPTIONS(state, adoptions) {
-      state.adoptions = adoptions;
+    //COMMENTS 
+   ADD_COMMENT ( state, contacto) {
+      state.contacto = contacto
     },
   },
   actions: {
+    //USER ACTIONS 
     setUser ({commit}, user) {
       commit ("SET_USER", user);
-    },
-   
-    addComment ({commit}, contacto) {
-      firebase.firestore().collection("contacts").add(contacto)
-    },
-
-    addAdoption( {commit}, adoption) {
-      adoption.email = firebase.auth().currentUser.email;
-      firebase.firestore().collection("adoptions").add(adoption);
-      alert("Tu mascota ha sido ingresada exitosamente");
-    },
-    addFavorite( {commit}, adoption) {
-      console.log("adding to favorites...");
-      const favorite = adoption;
-      firebase.firestore().collection("favorites").add(favorite);
-      alert("Ha sido agregada a Tus Favoritos");
-    },
-    delete_adoption ( {commit}, adoption) {
-      console.log("adoption id: " + adoption.id);
-      firebase.firestore().collection("adoptions").doc(adoption.id).delete();
-      alert("Tu adoptante ha sido eliminado");
-    },
-    show_Snack( { commit}, snack) {
-      commit ('SHOW_SNACK', snack);
-    },
-    get_Adoptions_By_Email(){
-      console.log("get_User_By_Email");
-      commit('GET_ADOPTIONS_BY_EMAIL', email)
-    },
-    get_User_By_Email({commit}){
-      console.log("get_User_By_Email");
-      const email = firebase.auth().currentUser.email;
-      commit('GET_USERS_BY_EMAIL', email)
-    },
-    get_Favorites( {commit}) {
-      console.log("in get favorites");
-      const email = firebase.auth().currentUser.email;
-      firebase
-      .firestore()
-      .collection("favorites")
-      .onSnapshot((snapshot) => {
-        const favorites = [];
-        let favoritesByEmail = [];
-        snapshot.forEach((doc) => { console.log("favs: " + doc.data().email);       
-          favorites.push({ id: doc.id, email: doc.data().email, age: doc.data().age,
-        photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname, size: doc.data().size, surgery: doc.data().surgery, 
-        typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
-        surgery: doc.data().surgery});
-        });
-        favoritesByEmail = favorites.filter(a => a.email == email);
-      commit ( "GET_FAVORITES", favoritesByEmail, email)
-    });
-    },
-    update_User({ commit }, { user, id }) {
+    }, update_User({ commit }, { user, id }) {
       console.log("userUpdated: " + user.name);
       firebase.firestore().collection("users").doc(id).set(user)
     },
-    setItemDataInForm({ commit }, id) {
-      commit("SET_ITEM_DATA_IN_FORM", id)
+   get_User_By_Email({commit}){
+      console.log("get_User_By_Email");
+      const email = firebase.auth().currentUser.email;
+      commit('GET_USERS_BY_EMAIL', email)
+   },
+    getUsers: ( { commit }) => {
+      firebase
+        .firestore()
+        .collection("users")
+        .onSnapshot((snapshot) => {
+          const users = []
+          snapshot.forEach((doc) => {console.log("doc: " + doc.data().email);
+            users.push({ id: doc.id, email: doc.data().email, password: doc.data().password,
+            photoURL: doc.data().photoURL, desc: doc.data().desc, resource: doc.data().resource,
+            address: doc.data().address, name: doc.data().name});
+          });
+        commit ( "GET_USERS", users)
+      });
     },
     register({ commit }, { name, email, address, resource, desc, password }) {
       firebase
@@ -171,10 +139,104 @@ export default new Vuex.Store({
           };
           commit('SHOW_SNACK', snack);
         });
-    }, 
+    },   setLoggedIn({ commit }, hasCorrectCredentials) {
+      if (hasCorrectCredentials) {
+        commit("SET_LOGGED_IN")
+      }
+    },
+    addUser({ commit }, user) {
+      console.log("Adding user: " + user.name);
+      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+        .then((userCredential) => {
+          // Signed in
+          const userSigned = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+        console.log("user: " + user.email);
+      firebase.firestore().collection("users").add(user)
+    },
+    //RELATED TO ADOPTIONS 
+    getAdoptions: ( { commit }) => {
+      const email = firebase.auth().currentUser.email;
+      firebase
+        .firestore()
+        .collection("adoptions")
+        .onSnapshot((snapshot) => {
+          const allAdoptions = []
+          let adoptions = []
+          snapshot.forEach((doc) => {          
+          allAdoptions.push({ id: doc.id, email: doc.data().email, age: doc.data().age,
+          photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname, size: doc.data().size, surgery: doc.data().surgery, 
+          typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
+          surgery: doc.data().surgery});
+          adoptions = allAdoptions.filter(a => a.email == email);
+          adoptions.forEach(a => {console.log("email of user giving: " + a.email);})
+          });
+        commit ( "GET_ADOPTIONS", adoptions)
+      });
+    },
+    addAdoption( {commit}, adoption) {
+      adoption.email = firebase.auth().currentUser.email;
+      firebase.firestore().collection("adoptions").add(adoption);
+      alert("Tu mascota ha sido ingresada exitosamente");
+    },
+    update_Adoption({ commit }, { adoption, id }) {
+      console.log("adoption id updated: " + id);
+      firebase.firestore().collection("adoptions").doc(id).set(adoption)
+    },
+     get_Adoptions_By_Email(){
+      console.log("get_User_By_Email");
+      commit('GET_ADOPTIONS_BY_EMAIL', email)
+    },
+    delete_adoption ( {commit}, adoption) {
+      console.log("adoption id: " + adoption.id);
+      firebase.firestore().collection("adoptions").doc(adoption.id).delete();
+      alert("Tu adoptante ha sido eliminado");
+    },
+    show_Snack( { commit}, snack) {
+      commit ('SHOW_SNACK', snack);
+    },
+    //FAVORITE ACTIONS 
+   get_Favorite_By_Id(id){
+    },
+    addFavorite( {commit}, adoption) {
+      console.log("adding to favorites...");
+      const favorite = adoption;
+      favorite.adoptionsId = adoption.id;
+      firebase.firestore().collection("favorites").add(favorite);
+      alert("Ha sido agregada a Tus Favoritos");
+    },
+    get_Favorites( {commit}) {
+      console.log("in get favorites");
+      const email = firebase.auth().currentUser.email;
+      firebase
+      .firestore()
+      .collection("favorites")
+      .onSnapshot((snapshot) => {
+        const favorites = [];
+        let favoritesByEmail = [];
+        snapshot.forEach((doc) => { console.log("favUserEmail: " + doc.data().favUserEmail);       
+          favorites.push({ id: doc.id, email: doc.data().email, age: doc.data().age,
+        photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname, 
+        size: doc.data().size, surgery: doc.data().surgery, 
+        typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
+        surgery: doc.data().surgery, favUserEmail: doc.data().favUserEmail, adoptionsId: doc.data().adoptionsId});
+        });
+        favoritesByEmail = favorites.filter(a => a.favUserEmail == email);
+        console.log("favoritesByEmail list size: " + favoritesByEmail.length);
+      commit ( "GET_FAVORITES", favorites, email)
+    });
+    },
+    setItemDataInForm({ commit }, id) {
+      commit("SET_ITEM_DATA_IN_FORM", id)
+    },
     fetch_adoptions( {commit}) {
       console.log("in fetch_adoptions");
-
       firebase
       .firestore()
       .collection("adoptions")
@@ -185,11 +247,12 @@ export default new Vuex.Store({
         allAdoptions.push({ id: doc.id, email: doc.data().email, age: doc.data().age,
         photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname, size: doc.data().size, surgery: doc.data().surgery, 
         typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
-        surgery: doc.data().surgery});
+        surgery: doc.data().surgery, likes: doc.data().likes, adopted: doc.data().adopted});
         });
       commit ( "FETCH_ADOPTIONS", allAdoptions)
     });
     },
+    //SIGN OUT ACTION 
     signOut ( { commit}) {
       firebase 
       .auth()
@@ -225,62 +288,12 @@ export default new Vuex.Store({
             }
           });
         },
-    getUsers: ( { commit }) => {
-      firebase
-        .firestore()
-        .collection("users")
-        .onSnapshot((snapshot) => {
-          const users = []
-          snapshot.forEach((doc) => {console.log("doc: " + doc.data().email);
-            users.push({ id: doc.id, email: doc.data().email, password: doc.data().password,
-            photoURL: doc.data().photoURL, desc: doc.data().desc, resource: doc.data().resource,
-            address: doc.data().address, name: doc.data().name});
-          });
-        commit ( "GET_USERS", users)
-      });
+
     },
-    getAdoptions: ( { commit }) => {
-      const email = firebase.auth().currentUser.email;
-      firebase
-        .firestore()
-        .collection("adoptions")
-        .onSnapshot((snapshot) => {
-          const allAdoptions = []
-          let adoptions = []
-          snapshot.forEach((doc) => {          
-          allAdoptions.push({ id: doc.id, email: doc.data().email, age: doc.data().age,
-          photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname, size: doc.data().size, surgery: doc.data().surgery, 
-          typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
-          surgery: doc.data().surgery});
-          adoptions = allAdoptions.filter(a => a.email == email);
-          adoptions.forEach(a => {console.log("email of user giving: " + a.email);})
-          });
-        commit ( "GET_ADOPTIONS", adoptions)
-      });
+    //COMMENTS ACTIONS 
+    addComment ({commit}, contacto) {
+      firebase.firestore().collection("contacts").add(contacto)
     },
-    addUser({ commit }, user) {
-      console.log("Adding user: " + user.name);
-      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-        .then((userCredential) => {
-          // Signed in
-          const userSigned = userCredential.user;
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
-        console.log("user: " + user.email);
-      firebase.firestore().collection("users").add(user)
-    },
-    setLoggedIn({ commit }, hasCorrectCredentials) {
-      if (hasCorrectCredentials) {
-        commit("SET_LOGGED_IN")
-      }
-     
-    }
-  },
 
   getters: {
     getUserById ({idEditing, users}) {
