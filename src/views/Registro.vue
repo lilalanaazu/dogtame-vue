@@ -1,49 +1,86 @@
 <template>
   <div>
-    <div class="containter m-5 p-5">
+    <div class="containter m-3 p-3">
       <h1>Registro</h1>
       <img
         class="banner"
         img-responsive
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1V9W_Ge75fgtpzVES2woj0Zo-cRicGzNcZQ&usqp=CAU"
       />
-      <el-form
-        :model="user"
-        ref="ruleForm"
-        label-width="120px"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="Nombre" prop="name">
-          <el-input v-model="user.name"></el-input>
-        </el-form-item>
-        <el-form-item label="Correo" prop="email"
-          ><el-input v-model="user.email"></el-input>
-        </el-form-item>
-        <el-form-item label="Ubicación" prop="region"
-          ><el-input v-model="user.address"> </el-input
-        ></el-form-item>
-        <el-form-item label="Contraseña" prop="pass"
-          ><el-input type="password" v-model="user.password"></el-input
-        ></el-form-item>
 
-        <el-form-item label="Deseas dar en adopción" prop="resource">
-          <el-radio-group v-model="user.resource">
-            <el-radio label="Si"></el-radio>
-            <el-radio label="No"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="Descripción" prop="desc">
-          <el-input type="textarea" v-model="user.desc"></el-input>
-        </el-form-item>
+      <b-form-group :model="user" ref="ruleForm" label-width="120px" class="demo-ruleForm">
+        <b-form-input
+          id="input-1"
+          v-model="user.name"
+          placeholder="Nombre"
+          required
+        ></b-form-input>
+      </b-form-group>
 
-        <el-form-item>
-          <el-button variant="outline-secondary" @click="register(user), (user = {})"
-            >Registrarme</el-button
+        <b-form-group>
+        <b-form-input
+        id="input-2"
+        v-model="user.email"
+        placeholder="Email"
+        required></b-form-input>
+        </b-form-group>
+
+          <b-form-group>
+        <b-form-input
+        id="input-3"
+        v-model="user.address"
+        placeholder="Ubicación"
+        required></b-form-input>
+        </b-form-group>
+
+        <b-form-group>
+        <b-form-input
+        id="input-4"
+        v-model="user.password"
+        placeholder="Email"
+        prop="pass"
+        type="password"
+        required></b-form-input>
+        </b-form-group>
+
+          <b-form-group>
+        <b-form-input
+        id="input-5"
+        v-model="user.phone"
+        placeholder="Teléfono"
+        required></b-form-input>
+        </b-form-group>
+
+          <b-form-group label="Deseas dar en adopcción"  id="input-6"
+        v-model="user.resource"
+        prop="resource"
+    
+        required>
+    
+        <b-form-checkbox value="Sí">Sí</b-form-checkbox>
+        <b-form-checkbox value="No">No</b-form-checkbox>
+        </b-form-group>
+
+           <b-form-group label="Describe lo que buscas">
+        <b-form-input
+        id="input-7"
+        v-model="user.desc"
+        placeholder="Descripción"
+        type="textarea"
+        required></b-form-input>
+        </b-form-group>
+
+      
+       
+          <b-button variant="outline-dark" @click="register(user), (user = {})"
+            >Registrarme</b-button
           >
-          <el-button>Cancelar </el-button>
-        </el-form-item>
-      </el-form>
+          <b-button variant="outline-dark">Cancelar </b-button>
+   
+
     </div>
+
+    <footer class="footer"></footer>
   </div>
 </template>
 
@@ -61,6 +98,7 @@ export default {
         address: "",
         resource: "",
         desc: "",
+        phone: "",
         photoURL: {
           nameFile: "",
           url: ""
@@ -89,5 +127,17 @@ export default {
 .banner {
   width: 520px;
   height: 200px;
+}
+
+.b-form {
+  width: 520px;
+  position: relative;
+  left: 300px;
+}
+
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
 }
 </style>

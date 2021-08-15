@@ -7,19 +7,39 @@
 
     </b-card>
 
-    <el-form label-width="100px" class="demo-ruleForm">
-      <el-form-item prop="email" label="Email">
-        <el-input v-model="user.email">
-          Correo electrónico</el-input
-        ></el-form-item
+<b-form-group
+        id="input-group-1"
+        label="Correo Electrónico"
+        label-for="input-1"
+  
       >
-      <el-form-item prop="password" label="Password" type="password"
-        ><el-input v-model="user.password" type="password"
-          >Contraseña</el-input
-        ></el-form-item
-      >
-      <el-button variant="outline-secondary" @click="logIn()"> Ingresar</el-button>
-    </el-form>
+        <b-form-input
+          id="input-1"
+          v-model="user.email"
+          type="email"
+          placeholder="Enter email"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Contraseña" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="user.password"
+          placeholder="Enter your password"
+          type="password"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+
+
+
+      
+      <b-button variant="outline-dark" @click="logIn()"> Ingresar</b-button>
+
+
+    <footer class="footer"></footer>
   </div>
 </template>
 
@@ -63,3 +83,19 @@ export default {
   
 };
 </script>
+
+<style scoped>
+
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
+}
+
+.b-form-group {
+  width: 320px;
+  position: relative;
+  left: 300px;
+}
+
+</style>

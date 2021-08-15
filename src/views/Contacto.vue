@@ -4,21 +4,61 @@
         <h1> Contacto </h1>
         <img class="banner" img-responsive src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYk9kaI7-g8ssfXw_9VzPD9_nL4mKzbfrVzg&usqp=CAU">
 
-<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-  <el-form-item label="Nombre"  prop="name">
-    <el-input v-model="ruleForm.name"></el-input>
-  </el-form-item>
-  <el-form-item label="Correo" prop="correo">
-      <el-input v-model="ruleForm.email"></el-input>
-  </el-form-item>
-  <el-form-item label="Mensaje" prop="mensaje">
-    <el-input type="textarea" v-model="ruleForm.message"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="addComment(ruleForm), (ruleForm = {})">Enviar</el-button>
-    <el-button @click="resetForm('ruleForm')">Cancelar</el-button>
-  </el-form-item>
-</el-form>
+
+   <b-form-group :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm"
+        id="input-group-1"
+        label="Nombre"
+        prop="name"
+        label-for="input-1"
+      
+      >
+        <b-form-input
+          id="input-1"
+          v-model="ruleForm.name"
+          type="email"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+         <b-form-group 
+        id="input-group-1"
+        label="Correo"
+        prop="email"
+        label-for="input-1"
+     
+      >
+        <b-form-input
+          id="input-1"
+          v-model="ruleForm.email"
+          type="email"
+          placeholder="Enter email"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+       <b-form-group 
+        id="input-group-1"
+        label="Mensaje"
+        prop="mensaje"
+        label-for="input-1"
+        
+      >
+        <b-form-input
+          id="input-1"
+          v-model="ruleForm.message"
+          type="email"
+          placeholder="Enter message"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+
+    <b-button variant="dark" @click="addComment(ruleForm), (ruleForm = {})">Enviar</b-button><br>
+    <b-button variant="dark" @click="resetForm('ruleForm')">Cancelar</b-button>
+
+<footer class="footer"></footer>
+
     </div>
 </template>
 
@@ -77,6 +117,18 @@ import firebase from "firebase";
 
 .banner {
     width: 400px;
+}
+
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
+}
+
+.el-form {
+   width: 520px;
+  position: relative;
+  left: 300px;
 }
 </style>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-<h1> Mis Favoritos </h1>
+<h1> Mis Favoritos <b-icon-heart></b-icon-heart></h1>
 
 <b-card-group>
   <b-card deck v-for="(favorite, i) in favorites" :key="i"
@@ -12,7 +12,7 @@
     style="max-width: 20rem;"
     class="mb-2"
     
-  >
+  ><b-icon-heart-fill></b-icon-heart-fill>
     <b-card-text>
           <h5>Nombre:  {{favorite.petsname}}</h5>
           <h5>Ubicación: {{favorite.city}}</h5>
@@ -27,6 +27,8 @@
   </b-card>
   </b-card-group>
 
+
+<footer class="footer"> </footer>
    </div>     
 </template>
 
@@ -52,3 +54,12 @@ export default {
    
 }
 </script>
+
+
+<style scoped>
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
+}
+</style>

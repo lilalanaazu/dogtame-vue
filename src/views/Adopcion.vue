@@ -3,10 +3,11 @@
 <div>
   <h1> Formulario para dar en Adopción </h1>
 <h4> Favor de subir una imágen de el adoptante </h4>
+<b-icon-dog></b-icon-dog>
   
    <input type="file" @change="setImg"/>
    <br/><br>
-   <button @click="saveAdoption">Subir foto </button>
+   <button @click="saveAdoption"><b-icon-cloud-arrow-up></b-icon-cloud-arrow-up> Subir foto </button>
   
    <div>
      <h6> </h6>
@@ -15,9 +16,13 @@
    </div>
 
 <h2 class="pt-5"> Formulario Adopción</h2>
-<div class="container border mt-5">
+<p> La información sobre la mascota que darás en adopción <br>
+es importante a la hora de adoptar, favor 
+    llenena todos los campos.</p>
+<div class="container border mt-5 mb-5">
   
- <b-input v-model="adoption.petsname" placeholder="Nombre Mascota"/> 
+  
+ <b-input class="mt-3" v-model="adoption.petsname" placeholder="Nombre Mascota"/> 
 <br>
 <b-input v-model="adoption.age" placeholder="Años"/>
 <br> 
@@ -34,10 +39,10 @@
  <b-input v-model="adoption.city" placeholder="Ciudad"/>
 <br> 
 
-<b-button variant="outline-secondary" @click="addAdoption(adoption)"> Enviar </b-button>
+<b-button variant="outline-secondary" class="mb-3" @click="addAdoption(adoption)">Dar en Adopción </b-button>
 
 </div>
-
+<footer class="footer"></footer>
 </div>
 
 </template>
@@ -153,5 +158,11 @@ export default {
 
 .container{
   width: 500px;
+}
+
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
 }
 </style>

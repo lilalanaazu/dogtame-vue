@@ -1,10 +1,13 @@
 <template>
   <div>
-  <template>
-    <b-navbar toggleable type="dark" variant="secondary">
-    <img class="logo" src="../assets/logo.png">
-    <b-navbar-brand type="light">Dogtame</b-navbar-brand>
-   
+<template>
+  <b-navbar toggleable type="dark" variant="secondary"> <img class="logo" src="../assets/logo.png">
+    <b-navbar-brand >Dogtame</b-navbar-brand>
+  <b-navbar-brand class="redes">Encuéntranos
+    <b-icon-instagram></b-icon-instagram>
+    <b-icon-twitter></b-icon-twitter>
+    <b-icon-facebook></b-icon-facebook></b-navbar-brand>
+
     <b-navbar-toggle target="navbar-toggle-collapse">
       <template #default="{ expanded }">
         <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
@@ -26,10 +29,11 @@
       </b-navbar-nav>
     </b-collapse>
     </b-navbar> 
+ 
          <div>
-         <b-button  class="button-logout" variant="danger" >Salir</b-button>
+         <b-button  class="button-logout" variant="danger" @click="signOut">Salir</b-button>
          </div>
-  </template> 
+  </template>
   </div>
 </template>   
 
@@ -54,7 +58,7 @@ import Firebase from "firebase";
 
             try {
               await Firebase.auth().signOut();
-              alert ("Deslogeado con éxito");
+              alert ("Has salido de tu sesión");
             } catch (e) {}
           },
           handleSelect(key, keyPath) {
@@ -75,4 +79,16 @@ import Firebase from "firebase";
      position:relative; 
      left:630px; top:2px
     }
+
+    .nombre{
+      position:relative;
+      left: 280px;
+    }
+
+    .redes{
+      position: relative;
+      left: 280px;
+    }
+
+    
     </style>

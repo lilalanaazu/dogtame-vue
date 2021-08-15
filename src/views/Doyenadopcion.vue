@@ -5,7 +5,7 @@
 
 <h5> En esta sección encontrarás a los animalitos que quieres dar en adopción </h5>
 
-<div class="container">
+
   <b-card-group deck v-for="(adoption, i) in adoptions" :key="i" >
         <b-card title="Busca hogar"  :img-src="adoption.photoURL.url" img-alt="Image" img-top> 
       <b-card-text>
@@ -19,16 +19,16 @@
           <h5>Años: {{adoption.age}}</h5>
       </b-card-text>
       <template #footer>
-        <small class="text-muted"><b-button variant="outline-danger" @click="delete_adoption(adoption)">Eliminar </b-button></small>
+        <small class="text-muted"><b-button variant="outline-danger" @click="delete_adoption(adoption)"><b-icon-trash></b-icon-trash> </b-button></small>
       </template>
         </b-card>
   </b-card-group>
-</div>
+
 
     <div>
         <b-button variant="outline-warning"><router-link to="/Perfil"> Volver a Perfil </router-link></b-button>
     </div>
-
+    <footer class="footer"></footer>
     </div>
 </template>
 
@@ -75,3 +75,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
+}
+
+.b-card{
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+</style>

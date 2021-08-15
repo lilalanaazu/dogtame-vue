@@ -6,29 +6,30 @@
       <h1>{{ userFoundByEmail.name }}</h1>
     
       <input type="file" @change="setImg" />
-      <b-button variant="outline-secondary" @click="saveUser"
-        >Agregar Fotografía</b-button> <b-button variant="outline-danger"  @click="deleteImg(nameFile)">Eliminar Imagen</b-button></div>
+      <b-button variant="outline-warning" @click="saveUser"
+        ><b-icon-camera></b-icon-camera> Guardar</b-button> <b-button variant="outline-danger"  @click="deleteImg(nameFile)"><b-icon-trash></b-icon-trash>Eliminar Imagen</b-button></div>
         <br>
-  <img width="100" :src="imgInput" />
-      <div><ul><li v-for="({ data: {  imgInput,  name,    photoURL: { url, nameFile }  } }, i) in users"  :key="i"  >
-      
-          </li></ul> </div>
+  <img class="avatar" width="100" :src="imgInput" />
+
+      <div v-for="({ data: {  imgInput,  name,    photoURL: { url, nameFile }  } }, i) in users"  :key="i"></div>
 
      
-
-    <b-icon-person></b-icon-person><h4>Nombre:</h4>
+<div class="caja">
+    <b-icon-person-circle></b-icon-person-circle><h4>Nombre:</h4>
     <h5>{{ userFoundByEmail.name }}</h5>
-    <font-awesome-icon icon="at" /><h4>Correo:</h4>
+    <b-icon-at></b-icon-at><h4>Correo:</h4>
     <h5>{{ userFoundByEmail.email }}</h5>
-    <font-awesome-icon icon="fas fa-map-marker-alt"/><h4>Ubicación:</h4>
+    <b-icon-cursor-fill></b-icon-cursor-fill>
+    <h4>Ubicación:</h4>
     <h5>{{ userFoundByEmail.address }}</h5>
     <div class="mt-5">
-      <b-button class="mb-5" variant="outline-danger"> Guardar </b-button>
-      
+      <b-button class="mt-3" variant="light"> Guardar </b-button><span></span>
+      <b-button class="mt-3" variant="light" v-b-modal.modal-prevent-closing><b-icon-pencil></b-icon-pencil>Editar</b-button>
+</div>
     </div>
 
  <div>
-    <b-button v-b-modal.modal-prevent-closing>Editar</b-button>
+    
 
     <div class="mt-3">
       
@@ -93,14 +94,15 @@
 
 
     <div>
-      <b-button class="mb-5" variant="outline-secondary"><router-link to="/Misadoptados">
+      <b-button class="mb-5" variant="light"><router-link to="/Misadoptados">
         Mis Adoptados</router-link> </b-button
       >
-      <b-button class="mb-5" variant="outline-primary"> <router-link to="/Favoritos">Mis Favoritos </router-link> </b-button>
-      <b-button class="mb-5" variant="outline-warning"> <router-link to="/Doyenadopcion">
+      <b-button class="mb-5" variant="light"> <router-link to="/Favoritos">Favoritos </router-link> </b-button>
+      <b-button class="mb-5" variant="light"> <router-link to="/Doyenadopcion">
         Doy en Adopción</router-link></b-button
       >
     </div>
+    <footer class="footer"></footer>
   </div>
 </template>
 
@@ -229,3 +231,33 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+.avatar{
+      height: 100px;
+    width: 100px;
+    /* los siguientes valores son independientes del tamaño del círculo */
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+    background-size: 100% auto;
+}
+
+.caja {
+  width: 400px;
+  position: relative;
+  left:500px; top:2px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+}
+
+.footer{
+  width: auto;
+  height: 100px;
+  background-color: #99a9bf;
+}
+
+</style>
