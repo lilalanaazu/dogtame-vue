@@ -56,10 +56,13 @@ export default new Vuex.Store({
 
     }, SET_ADOPTIONS(state, adoptions) {
       state.adoptions = adoptions;
-      //LOG IN 
+      //LOG IN/OUT
     },
     SET_LOGGED_IN(state) {
       state.isLogged = true;
+    },
+    SET_LOGGED_OUT(state) {
+      state.isLogged = false;
     },
     //COMMENTS 
     ADD_COMMENT(state, contacto) {
@@ -188,6 +191,8 @@ export default new Vuex.Store({
     },
     addAdoption({ commit }, adoption) {
       adoption.email = firebase.auth().currentUser.email;
+      adoption.likes = 0;
+      adoption.adopted = false;
       firebase.firestore().collection("adoptions").add(adoption);
       alert("Tu mascota ha sido ingresada exitosamente");
     },
@@ -233,11 +238,12 @@ export default new Vuex.Store({
           let favoritesByEmail = [];
           snapshot.forEach((doc) => {
             favorites.push({
-              email: doc.data().email, age: doc.data().age,
+              id: doc.id, email: doc.data().email, age: doc.data().age,
               photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname,
               size: doc.data().size, surgery: doc.data().surgery,
               typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
-              surgery: doc.data().surgery, favUserEmail: doc.data().favUserEmail, adoptionsId: doc.data().adoptionsId
+              surgery: doc.data().surgery, favUserEmail: doc.data().favUserEmail, adoptionsId: doc.data().adoptionsId,
+              ownersname: doc.data().ownersname, phone: doc.data().phone, likedusername: doc.data().likedusername
             });
           });
           console.log("FAVORITES SIZE IN STORE: " + favorites.length);
@@ -261,27 +267,26 @@ export default new Vuex.Store({
               id: doc.id, email: doc.data().email, age: doc.data().age,
               photoURL: doc.data().photoURL, city: doc.data().city, petsname: doc.data().petsname, size: doc.data().size, surgery: doc.data().surgery,
               typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
-              surgery: doc.data().surgery, likes: doc.data().likes, adopted: doc.data().adopted
+              surgery: doc.data().surgery, likes: doc.data().likes, adopted: doc.data().adopted,
+              ownersname: doc.data().ownersname, phone: doc.data().phone
             });
           });
           commit("FETCH_ADOPTIONS", allAdoptions)
         });
     },
     //SIGN OUT ACTION 
-    signOut({ commit }) {
+    signOut({ commit }, state) {
+      console.log("Saliendo desde store...");
+      
       firebase
         .auth()
         .signOut()
         .then(() => {
           commit("SET_USER", null);
+          commit("SET_LOGGED_OUT");
         })
         .catch((error) => {
-          const snack = {
-            show: true,
-            text: error.message,
-            color: 'error',
-          };
-          commit('SHOW_SNACK', snack);
+
         });
     },
     auth_State_Change({ commit }) {

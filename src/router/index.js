@@ -10,6 +10,8 @@ import Perfil from "../views/Perfil.vue"
 import Adopcion from "../views/Adopcion.vue"
 import Misadoptados from "../views/Misadoptados.vue"
 import Doyenadopcion from "../views/Doyenadopcion.vue"
+import firebase from "firebase"
+import { NavbarPlugin } from 'bootstrap-vue'
 
 Vue.use(VueRouter)
 
@@ -40,7 +42,10 @@ const routes = [
   {
     path: '/favoritos',
     name: 'Favoritos',
-    component: Favoritos
+    component: Favoritos,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: '/contacto',
@@ -50,28 +55,44 @@ const routes = [
   {
     path: "/Busqueda",
     name: "Busqueda",
-    component: Busqueda
+    component: Busqueda,
+    meta: {
+      auth: true,
+    },
   }, 
   {
     path:"/Perfil", 
     name: "Perfil",
-    component: Perfil
+    component: Perfil,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/Adopcion",
     name:"Adopcion", 
-    component: Adopcion
+    component: Adopcion,
+    meta: {
+      auth: true,
+    },
   },
   {
     path:"/Misadoptados",
     name: "Misadoptados",
-    component: Misadoptados
+    component: Misadoptados,
+    meta: {
+      auth: true,
+    },
   },
   {
     path:"/Doyenadopcion",
     name: "Doyenadopcion",
-    component: Doyenadopcion
+    component: Doyenadopcion,
+    meta: {
+      auth: true,
+    },
   }
+
 ]
 
 const router = new VueRouter({
@@ -79,6 +100,26 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 300);
+  if (to.name === 'Busqueda') {
+    next();
+  }
+  firebase.auth().onAuthStateChanged((user) => {
+    let authRequired = to.matched.some((route) => route.meta.auth);
+    if (user) {
+      user.getIdTokenResult().then((idTokenResult) => {
+        next();
+      });
+    } else {
+      if (authRequired) next('/');
+      else next();
+    }
+  });
+});
 
 
 

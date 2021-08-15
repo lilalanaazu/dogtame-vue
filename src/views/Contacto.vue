@@ -6,14 +6,14 @@
 
 
    <b-form-group :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm"
-        id="input-group-1"
+       
         label="Nombre"
         prop="name"
         label-for="input-1"
       
       >
         <b-form-input
-          id="input-1"
+     
           v-model="ruleForm.name"
           type="email"
           placeholder="Enter name"
@@ -21,15 +21,15 @@
         ></b-form-input>
       </b-form-group>
 
-         <b-form-group 
-        id="input-group-1"
+         <b-form-group class="demo-ruleForm"
+      
         label="Correo"
         prop="email"
         label-for="input-1"
      
       >
         <b-form-input
-          id="input-1"
+          
           v-model="ruleForm.email"
           type="email"
           placeholder="Enter email"
@@ -37,25 +37,26 @@
         ></b-form-input>
       </b-form-group>
 
-       <b-form-group 
+       <b-form-group class="demo-ruleForm"
         id="input-group-1"
-        label="Mensaje"
-        prop="mensaje"
+        label="Message"
+        prop="message"
         label-for="input-1"
         
       >
         <b-form-input
-          id="input-1"
+          
           v-model="ruleForm.message"
-          type="email"
+          type="text-area"
           placeholder="Enter message"
           required
         ></b-form-input>
       </b-form-group>
 
-
-    <b-button variant="dark" @click="addComment(ruleForm), (ruleForm = {})">Enviar</b-button><br>
-    <b-button variant="dark" @click="resetForm('ruleForm')">Cancelar</b-button>
+<div class="">
+    <b-button variant="outline-dark" @click="addComment(ruleForm), (ruleForm = {})">Enviar</b-button>
+    </div>
+    
 
 <footer class="footer"></footer>
 
@@ -125,10 +126,10 @@ import firebase from "firebase";
   background-color: #99a9bf;
 }
 
-.el-form {
-   width: 520px;
+.demo-ruleForm {
+  width: 450px;
   position: relative;
-  left: 300px;
+  left:480px; top:2px;
 }
 </style>
 

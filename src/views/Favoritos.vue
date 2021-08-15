@@ -23,7 +23,7 @@
           <h5>Cirugías: {{favorite.surgery}}</h5>
           <h5>Años: {{favorite.age}}</h5>
     </b-card-text>
-    <b-button href="#" variant="outline-danger">Adoptar</b-button>
+    <b-button href="#" variant="outline-danger" @click="adoptar(favorite)" >Adoptar</b-button>
   </b-card>
   </b-card-group>
 
@@ -35,6 +35,9 @@
 <script>
 
 import {mapActions, mapState} from "vuex";
+import{ init } from 'emailjs-com';
+import emailjs from 'emailjs-com';
+init("user_tVClIVhzXViVGiPJjj6NZ");
 
 export default {
   name: "Favoritos",
@@ -48,7 +51,19 @@ export default {
       console.log("size: " + this.favorites.length);
     },
     methods: {
-      ...mapActions(["get_Favorites"])
+      ...mapActions(["get_Favorites"]),
+      adoptar (favorite) {
+        const { email, petsname, ownersname, phone, likedusername } = favorite;
+        console.log("phone: " + phone);
+        emailjs.send("service_tbrs0g6","template_7zoosci",{
+          to_name:ownersname,
+          adopted_name: petsname,
+          user_id: likedusername,
+          user_phone: phone,
+          reply_to: likedusername,
+          user_email: email,
+          });
+      }
     },
     computed: {...mapState(["favorites"])}
    

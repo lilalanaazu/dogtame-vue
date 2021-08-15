@@ -2,7 +2,7 @@
   <div>
 <template>
   <b-navbar toggleable type="dark" variant="secondary"> <img class="logo" src="../assets/logo.png">
-    <b-navbar-brand >Dogtame</b-navbar-brand>
+    <b-navbar-brand class="titulo">Dogtame</b-navbar-brand>
   <b-navbar-brand class="redes">Encuéntranos
     <b-icon-instagram></b-icon-instagram>
     <b-icon-twitter></b-icon-twitter>
@@ -31,7 +31,7 @@
     </b-navbar> 
  
          <div>
-         <b-button  class="button-logout" variant="danger" @click="signOut">Salir</b-button>
+         <b-button  class="button-logout" variant="danger" v-if="isLogged" @click="signOut()">Salir</b-button>
          </div>
   </template>
   </div>
@@ -52,10 +52,10 @@ import Firebase from "firebase";
             activeIndex2: "1"
           };
         },
-        computed: { ...mapState(["isLogged", "signOut"])},
-        methods: {
-          async signOut(){
-
+        computed: { ...mapState(["isLogged"])},
+        methods: {...mapActions(["signOut"]),
+          async signOut2(){
+            console.log("Saliendo...");
             try {
               await Firebase.auth().signOut();
               alert ("Has salido de tu sesión");
@@ -89,6 +89,13 @@ import Firebase from "firebase";
       position: relative;
       left: 280px;
     }
+
+    .titulo{
+      position: relative;
+      left: 280px;
+    }
+
+  
 
     
     </style>

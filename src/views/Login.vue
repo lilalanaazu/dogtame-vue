@@ -7,13 +7,13 @@
 
     </b-card>
 
-<b-form-group
+<b-form-group class="form"
         id="input-group-1"
         label="Correo Electrónico"
         label-for="input-1"
   
       >
-        <b-form-input
+        <b-form-input 
           id="input-1"
           v-model="user.email"
           type="email"
@@ -22,7 +22,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Contraseña" label-for="input-2">
+      <b-form-group class="form" id="input-group-2" label="Contraseña" label-for="input-2">
         <b-form-input
           id="input-2"
           v-model="user.password"
@@ -92,10 +92,10 @@ export default {
   background-color: #99a9bf;
 }
 
-.b-form-group {
-  width: 320px;
+.form {
+     width: 450px;
   position: relative;
-  left: 300px;
+  left:480px; top:2px;
 }
 
 </style>

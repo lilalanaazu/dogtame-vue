@@ -2,13 +2,15 @@
   <div>
     <div class="containter m-3 p-3">
       <h1>Registro</h1>
+      <p> Para nosotros es muy importante que seas parte de esta comunidad, sin tu ayuda no podríamos dar hogar a miles de animales </p>
+      <p> Completa el siguiente formulario para ser parte de nuestra comunidad </p>
       <img
         class="banner"
         img-responsive
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1V9W_Ge75fgtpzVES2woj0Zo-cRicGzNcZQ&usqp=CAU"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNglmWnZ8l1ay-3TCff1_6mnVdfNfYTtfq0w&usqp=CAU"
       />
 
-      <b-form-group :model="user" ref="ruleForm" label-width="120px" class="demo-ruleForm">
+      <b-form-group :model="user" ref="ruleForm"  class="demo-ruleForm">
         <b-form-input
           id="input-1"
           v-model="user.name"
@@ -17,7 +19,7 @@
         ></b-form-input>
       </b-form-group>
 
-        <b-form-group>
+        <b-form-group class="demo-ruleForm">
         <b-form-input
         id="input-2"
         v-model="user.email"
@@ -25,7 +27,7 @@
         required></b-form-input>
         </b-form-group>
 
-          <b-form-group>
+          <b-form-group class="demo-ruleForm">
         <b-form-input
         id="input-3"
         v-model="user.address"
@@ -33,17 +35,17 @@
         required></b-form-input>
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group class="demo-ruleForm">
         <b-form-input
         id="input-4"
         v-model="user.password"
-        placeholder="Email"
+        placeholder="Password"
         prop="pass"
         type="password"
         required></b-form-input>
         </b-form-group>
 
-          <b-form-group>
+          <b-form-group class="demo-ruleForm">
         <b-form-input
         id="input-5"
         v-model="user.phone"
@@ -51,17 +53,17 @@
         required></b-form-input>
         </b-form-group>
 
-          <b-form-group label="Deseas dar en adopcción"  id="input-6"
+          <b-form-group class="demo-ruleForm" label="Deseas dar en adopcción"  id="input-6"
         v-model="user.resource"
         prop="resource"
     
         required>
     
-        <b-form-checkbox value="Sí">Sí</b-form-checkbox>
+        <b-form-checkbox  value="Sí">Sí</b-form-checkbox>
         <b-form-checkbox value="No">No</b-form-checkbox>
         </b-form-group>
 
-           <b-form-group label="Describe lo que buscas">
+           <b-form-group class="demo-ruleForm" label="Describe lo que buscas">
         <b-form-input
         id="input-7"
         v-model="user.desc"
@@ -71,11 +73,11 @@
         </b-form-group>
 
       
-       
+       <div class="p-2">
           <b-button variant="outline-dark" @click="register(user), (user = {})"
             >Registrarme</b-button
-          >
-          <b-button variant="outline-dark">Cancelar </b-button>
+          ></div>
+  
    
 
     </div>
@@ -129,15 +131,15 @@ export default {
   height: 200px;
 }
 
-.b-form {
-  width: 520px;
-  position: relative;
-  left: 300px;
-}
-
 .footer{
   width: auto;
   height: 100px;
   background-color: #99a9bf;
+}
+
+.demo-ruleForm {
+   width: 450px;
+  position: relative;
+  left:400px; top:2px;
 }
 </style>

@@ -20,8 +20,11 @@
 es importante a la hora de adoptar, favor 
     llenena todos los campos.</p>
 <div class="container border mt-5 mb-5">
-  
-  
+  <br>
+  <b-input v-model="adoption.ownersname" placeholder="Nombre del Dueño"/>
+<br>
+<b-input v-model="adoption.phone" placeholder="Teléfono"/>
+<br>   
  <b-input class="mt-3" v-model="adoption.petsname" placeholder="Nombre Mascota"/> 
 <br>
 <b-input v-model="adoption.age" placeholder="Años"/>

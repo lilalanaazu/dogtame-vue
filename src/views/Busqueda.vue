@@ -59,6 +59,7 @@ export default {
     name: "Busqueda",
     data() {
         return {
+          user: { data: {} },
           selected: null,
           adoption : {},
           options: ["Perro", "Gato", "Conejo", "Ave", "Todos"],
@@ -81,7 +82,9 @@ export default {
       console.log(this.allFavorites.length);
     },
     methods: {
-      ...mapActions(["fetch_adoptions", "get_Favorites", "addFavorite", "update_Adoption", "delete_Favorite"]),
+      ...mapActions(["fetch_adoptions", "get_Favorites",
+       "addFavorite", "update_Adoption", "delete_Favorite",
+       "get_User_By_Email"]),
       filterBy(selected){
         const typeofanimal = selected.toLowerCase();
         this.adoptionsFiltered = this.allAdoptions;
@@ -101,7 +104,9 @@ export default {
           adoption.likes ++;
           const { id } = adoption;
           let favorite = {};
-          
+          const authEmail = firebase.auth().currentUser.email;
+          this.user = this.get_User_By_Email(authEmail);
+          /*
           favorite.email = adoption.email;
           favorite.adoptionsId = adoption.id;
           favorite.photoURL = adoption.photoURL;
@@ -112,8 +117,12 @@ export default {
           favorite.typeofanimal = adoption.typeofanimal;
           favorite.vaccine = adoption.vaccine;
           favorite.sex = adoption.sex;
-          favorite.surgery = adoption.surgery;
-          favorite.typeofanimal = adoption.typeofanimal;
+          favorite.ownersname = adoption.ownersname;
+          favorite.phone = adoption.phone;
+          */
+         favorite = adoption;
+         favorite.id = adoption.id;
+          favorite.likedusername = this.userFoundByEmail.name;
           
          //delete favorite.id;         
           favorite.adoptionsId = adoption.id;
@@ -162,7 +171,7 @@ export default {
       }
       
     },
-    computed: {...mapState(["allAdoptions", "favorites"]),
+    computed: {...mapState(["allAdoptions", "favorites", "userFoundByEmail"]),
     ...mapGetters(["favorites"])
     ,isLikedComputed: function(){
 
