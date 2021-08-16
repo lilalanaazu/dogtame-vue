@@ -24,10 +24,11 @@
           <h5>Años: {{favorite.age}}</h5>
     </b-card-text>
     <b-button href="#" variant="outline-danger" @click="adoptar(favorite)" >Adoptar</b-button>
+    <b-button :key='counter' href="#" variant="outline-danger" @click="unlike(favorite)" >Unlike</b-button>
   </b-card>
   </b-card-group>
 
-
+<b-button variant="outline-warning"><router-link to="/Perfil"> Volver a Perfil </router-link></b-button>
 <footer class="footer"> </footer>
    </div>     
 </template>
@@ -43,19 +44,22 @@ export default {
   name: "Favoritos",
     data() {
         return {
-          favoritesFiltered: []
+          favoritesFiltered: [],
+          counter: 0
         }
     },
     mounted(){
       this.get_Favorites();
+      this.fetch_adoptions();
       console.log("size: " + this.favorites.length);
     },
     methods: {
-      ...mapActions(["get_Favorites"]),
+      ...mapActions(["fetch_adoptions","get_Favorites","delete_Favorite","update_Adoption"]),
       adoptar (favorite) {
         const { email, petsname, ownersname, phone, likedusername } = favorite;
         console.log("phone: " + phone);
         emailjs.send("service_tbrs0g6","template_7zoosci",{
+
           to_name:ownersname,
           adopted_name: petsname,
           user_id: likedusername,
@@ -63,9 +67,23 @@ export default {
           reply_to: likedusername,
           user_email: email,
           });
+          alert("Ha sido enviado un correo electrónico al dueño de esta mascota");
+      },
+      unlike(favorite){
+        const adoption = this.allAdoptions.find(i => i.id == favorite.adoptionsId);
+        this.counter ++;
+        
+          console.log("FAV A eliminar: " + adoption.id);
+          adoption.likes --;
+          this.delete_Favorite({favorite: favorite});
+          let { id } = adoption;
+          this.update_Adoption({adoption: adoption, id});
+          
+          console.log("already liked");
+        
       }
     },
-    computed: {...mapState(["favorites"])}
+    computed: {...mapState(["allAdoptions","favorites"])}
    
 }
 </script>

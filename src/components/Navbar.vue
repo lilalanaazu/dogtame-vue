@@ -54,16 +54,6 @@ import Firebase from "firebase";
         },
         computed: { ...mapState(["isLogged"])},
         methods: {...mapActions(["signOut"]),
-          async signOut2(){
-            console.log("Saliendo...");
-            try {
-              await Firebase.auth().signOut();
-              alert ("Has salido de tu sesión");
-            } catch (e) {}
-          },
-          handleSelect(key, keyPath) {
-            console.log(key, keyPath);
-          }
         },
         
       };

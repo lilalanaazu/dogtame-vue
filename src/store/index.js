@@ -284,6 +284,7 @@ export default new Vuex.Store({
         .then(() => {
           commit("SET_USER", null);
           commit("SET_LOGGED_OUT");
+          alert ("Has salido de tu sesión, vuelve pronto");
         })
         .catch((error) => {
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1> Login </h1>
+    <h1 class="titulo"> Login </h1>
     <b-card bg-variant="light" text-variant="dark">
    
       <img img-fluid width="500px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZN9-G_r7koBb_aLE1hRzTqKb5N5dKLxNIVg&usqp=CAU">
@@ -36,7 +36,7 @@
 
 
       
-      <b-button variant="outline-dark" @click="logIn()"> Ingresar</b-button>
+      <b-button id="loginbutton" variant="outline-dark" @click="logIn()"> Ingresar</b-button>
 
 
     <footer class="footer"></footer>

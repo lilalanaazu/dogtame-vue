@@ -1,7 +1,7 @@
 <template>
     
 <div>
-   <h1> Encuentra a tu próximo miembro de la familia </h1>
+   <h1 class="titulo"> Encuentra a tu próximo miembro de la familia </h1>
 
 
   <div>
@@ -25,7 +25,7 @@
   >
     <b-card-text>
            <b-button variant="outline-danger"><h5>Likes: {{adoption.likes}}</h5></b-button>
-           <h5>Nombre:  {{adoption.petsname}}</h5>
+           <h5 id="petsname">Nombre:  {{adoption.petsname}}</h5>
           <h5>Ubicación: {{adoption.city}}</h5>
           <h5>Tipo de animal: {{adoption.typeofanimal}}</h5>
           <h5>Tamaño: {{adoption.size}}</h5>
@@ -38,7 +38,6 @@
     </b-card-text>
     <div :key='counter'>
     <b-button href="#" variant="danger" v-show="isLiked(adoption)" @click="like(adoption)">Like</b-button>
-    <b-button href="#" variant="danger" v-show="!isLiked(adoption)" @click="like(adoption)">Unlike</b-button>
     </div>
   </b-card>
   </b-card-group>
@@ -140,22 +139,10 @@ export default {
 
           //favoritesByEmail = favorites.filter(a => a.favUserEmail == email);
         });
-          console.log("favs desde busqueda" + favs.length);
-          //this.allFavorites.push(favorite);
           this.isLikedComputed
-          //this.get_Favorites();
           alert("Ha sido agregada a Tus Favoritos");
-          await console.log("state favorites: " + this.favorites.length);
           this.allFavorites.push(favorite);
-          //this.liked.splice(i, 0, false);
         } else {
-          console.log("FAV A eliminar: " + fav.id);
-          adoption.likes --;
-          let favId = fav.id;
-          this.delete_Favorite({favorite: fav});
-          let { id } = adoption;
-          this.allFavorites.splice(fav);
-          this.update_Adoption({adoption: adoption, id});
           
           console.log("already liked");
         }

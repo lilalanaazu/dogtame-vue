@@ -23,42 +23,32 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 El proyecto se llama Dogtame, es una aplicación web que como objetivo busca abrir un espacio para que las personas puedan adoptar o dar en adopción cuatro tipo de mascotas: perros, gatos, roedores y aves. El tipo de usuarios a que apunta son personas que respetan y aman a los animales quienes pueden estar interesados en adoptar un nuevo miembro o dar en adopción. 
 
----Guía de estilos: una breve guía de estilos que indique tipografías utilizadas, tamaños de texto, colores seleccionados y elementos que harán uso de ellas.
+---Guía de estilos:
 
-Se utlizará Element UI como base en este proyecto, los colores serán neutros ya que las imágenes son lo importante en la aplicación. 
-
-Paleta de colores: 
-Texto primario
-#303133
-Texto regular
-#606266
-Texto secundario
-#909399
-Texto de placeholder
-#C0C4CC
-Borde base
-#DCDFE6
-Borde ligero
-#E4E7ED
-Borde claro
-#EBEEF5
-Borde extra claro
-#F2F6FC
-Basic Black
-#000000
-Basic White
-#FFFFFF
-
-Los colores más oscuros serán utlizados para Navbar y Footer. 
-Los grises para las letras y links. 
-
+La guía de estilos principales del proyecto es base a BootstrapVue, se utilizan componentes de librería. 
 
 ---Guía de instalación del proyecto: 
 
 Para la instalación de este proyecto será necesario trabajar con Cloud Functions para la recopilación de usuarios e imágenes que han de subir los mismos. 
 Se utilizará Webpack.
 
+El deployment de Dogtame ha sido realizado con Docker y Heroku. 
+Para ello, utilicé Docker para crear una imagen única y después registrarlo con Heroku. 
+
+Registro a container 
+```
+heroku container:login
+```
+
+Construcción de Dockerfile en un directorio para hacer push a Docker image. 
+```
+heroku container:push web
+```
+Para finalizar el Deploy de la imagen.
+``` 
+heroku container:release web
+```
 
 --- Rutas de acceso: 
 
-La aplicación está dentro de una carpeta llamada Dogtame
+https://dogtame.herokuapp.com/
