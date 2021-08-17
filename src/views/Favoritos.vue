@@ -3,7 +3,7 @@
 <h1> Mis Favoritos <b-icon-heart></b-icon-heart></h1>
 
 <b-card-group>
-  <b-card deck v-for="(favorite, i) in favorites" :key="i"
+  <b-card deck v-for="(favorite, i) in favoritesByEmail" :key="i"
     title="Adogtame" 
     :img-src="favorite.photoURL.url"
     img-alt="Image"
@@ -51,12 +51,12 @@ export default {
     mounted(){
       this.get_Favorites();
       this.fetch_adoptions();
-      console.log("size: " + this.favorites.length);
+      console.log("size: " + this.favoritesByEmail.length);
     },
     methods: {
       ...mapActions(["fetch_adoptions","get_Favorites","delete_Favorite","update_Adoption"]),
       adoptar (favorite) {
-        const { email, petsname, ownersname, phone, likedusername } = favorite;
+        const { email, petsname, ownersname, phone, likedusername, likedemail } = favorite;
         console.log("phone: " + phone);
         emailjs.send("service_tbrs0g6","template_7zoosci",{
 
@@ -64,6 +64,7 @@ export default {
           adopted_name: petsname,
           user_id: likedusername,
           user_phone: phone,
+          email: likedemail,
           reply_to: likedusername,
           user_email: email,
           });
@@ -83,7 +84,7 @@ export default {
         
       }
     },
-    computed: {...mapState(["allAdoptions","favorites"])}
+    computed: {...mapState(["allAdoptions","favoritesByEmail"])}
    
 }
 </script>

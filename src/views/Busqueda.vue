@@ -37,7 +37,7 @@
 
     </b-card-text>
     <div :key='counter'>
-    <b-button href="#" variant="danger" v-show="isLiked(adoption)" @click="like(adoption)">Like</b-button>
+    <b-button href="#" variant="danger" v-show="isNotLiked(adoption)" @click="like(adoption)">Like</b-button>
     </div>
   </b-card>
   </b-card-group>
@@ -95,8 +95,7 @@ export default {
       },
       async like(adoption){
         this.counter ++;
-        console.log(this.allFavorites);
-        const fav = this.allFavorites.find(i => i.adoptionsId == adoption.id);
+        const fav = this.favoritesByEmail.find(i => i.adoptionsId == adoption.id);
         
         if (fav == null) {
           console.log("giving like...");
@@ -122,6 +121,7 @@ export default {
          favorite = adoption;
          favorite.id = adoption.id;
           favorite.likedusername = this.userFoundByEmail.name;
+          favorite.likedemail = authEmail;
           
          //delete favorite.id;         
           favorite.adoptionsId = adoption.id;
@@ -147,9 +147,9 @@ export default {
           console.log("already liked");
         }
       },// pasarlo a computed 
-      isLiked(adoption){
-        const fav = this.allFavorites.find(i => i.adoptionsId == adoption.id);
-      this.isLikedComputed;
+      isNotLiked(adoption){
+        const fav = this.favoritesByEmail.find(i => i.adoptionsId == adoption.id);
+
         if (fav == null) {
           return true;
         } else {
@@ -158,7 +158,7 @@ export default {
       }
       
     },
-    computed: {...mapState(["allAdoptions", "favorites", "userFoundByEmail"]),
+    computed: {...mapState(["allAdoptions", "favorites", "userFoundByEmail", "favoritesByEmail"]),
     ...mapGetters(["favorites"])
     ,isLikedComputed: function(){
 

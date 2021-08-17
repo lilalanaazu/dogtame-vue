@@ -9,6 +9,7 @@ export default new Vuex.Store({
     adoptions: [],
     allAdoptions: [],
     favorites: [],
+    favoritesByEmail: [],
     userFoundByEmail: null,
     idEditing: null,
     editing: false,
@@ -35,9 +36,12 @@ export default new Vuex.Store({
     },
     //FAVORITES 
     GET_FAVORITES(state, favorites) {
-      console.log("in GET_FAVORITES");
       state.favorites = favorites;
-      //console.log("favs size: " + state.favorites.length);
+    },
+    GET_FAVORITES_BY_EMAIL(state, favoritesByEmail) {
+     
+      state.favoritesByEmail = favoritesByEmail; 
+      console.log("favoritesByEmail in state: " + state.favoritesByEmail.length);
     },
     ADD_FAVORITE(state, favorite) {
 
@@ -127,7 +131,9 @@ export default new Vuex.Store({
                 show: true,
                 text: 'Registrado con exito!',
                 color: 'success',
+                
               };
+              alert("Has sido registrado con éxito, ahora puedes logearte");
             })
             .catch((error) => {
               const snack = {
@@ -243,12 +249,15 @@ export default new Vuex.Store({
               size: doc.data().size, surgery: doc.data().surgery,
               typeofanimal: doc.data().typeofanimal, vaccine: doc.data().vaccine, sex: doc.data().sex,
               surgery: doc.data().surgery, favUserEmail: doc.data().favUserEmail, adoptionsId: doc.data().adoptionsId,
-              ownersname: doc.data().ownersname, phone: doc.data().phone, likedusername: doc.data().likedusername
+              ownersname: doc.data().ownersname, phone: doc.data().phone, 
+              likedusername: doc.data().likedusername, likedemail: doc.data().likedemail
             });
           });
           console.log("FAVORITES SIZE IN STORE: " + favorites.length);
-          favoritesByEmail = favorites.filter(a => a.favUserEmail == email);
+          favoritesByEmail = favorites.filter(a => a.likedemail == email);
+          console.log("favoritesByEmail lenght in get: " + favoritesByEmail.length);
           commit("GET_FAVORITES", favorites)
+          commit("GET_FAVORITES_BY_EMAIL", favoritesByEmail)
         });
     },
     setItemDataInForm({ commit }, id) {
